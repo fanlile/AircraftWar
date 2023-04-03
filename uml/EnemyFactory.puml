@@ -1,0 +1,46 @@
+@startuml
+interface Enemy {
+
+}
+
+interface EnemyFactory {
+    + createEnemy():AbstractAircraft
+}
+
+class MobEnemy {
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + increaseScore(int score):int
+    + drop_prop():List<BaseProp>
+}
+
+Enemy <|.. MobEnemy
+
+class MobEnemyFactory {
+    + createEnemy():AbstractAircraft
+}
+
+EnemyFactory <|.. MobEnemyFactory
+MobEnemyFactory ..> MobEnemy
+
+class EliteEnemy {
+    - shootNum:int
+    - power:int
+    - direction:int
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():
+    + shoot():List<BaseBullet>
+    + increase(int score):int
+    + drop_prop():List<BaseProp>
+}
+
+Enemy <|.. EliteEnemy
+
+class EliteEnemyFactory{
+    + createEnemy():AbstractAircraft
+}
+
+EnemyFactory <|.. EliteEnemyFactory
+EliteEnemyFactory ..> EliteEnemy
+@enduml

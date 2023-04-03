@@ -1,0 +1,56 @@
+@startuml
+abstract class BaseProp {
+    + BaseProp(int locationX, int locationY,int speedX, int speedY)
+    + forward():void
+    + {abstract} active(HeroAircraft heroAircraft)
+}
+
+interface BasePropFactory {
+    + createBaseProp(int x, int y):BaseProp
+}
+
+class Prop_Blood {
+    - blood:int
+    + Prop_Blood(int locationX, int locationY, int speedX, int speedY, int blood)
+    + active(HeroAircraft heroAircraft):void
+}
+
+BaseProp <|-- Prop_Blood
+
+class Prop_BloodFactory {
+    + createBaseProp(int x,int y):BaseProp
+}
+
+BasePropFactory <|.. Prop_BloodFactory
+Prop_BloodFactory ..> Prop_Blood
+
+class Prop_Bomb {
+    + Prop_Bomb(int locationX, int locationY, int speedX, int speedY)
+    + active(HeroAircraft heroAircraft):void
+}
+
+BaseProp <|-- Prop_Bomb
+
+class Prop_BombFactory {
+    + createBaseProp(int x,int y):BaseProp
+}
+
+BasePropFactory <|.. Prop_BombFactory
+Prop_BombFactory ..> Prop_Bomb
+
+class Prop_Bullet {
+    + Prop_Bullet(int locationX, int locationY, int speedX, int speedY)
+    + active(HeroAircraft heroAircraft):void
+}
+
+BaseProp <|-- Prop_Bullet
+
+class Prop_BulletFactory {
+    + createBaseProp(int x,int y):BaseProp
+}
+
+BasePropFactory <|.. Prop_BulletFactory
+Prop_BulletFactory ..> Prop_Bullet
+
+
+@enduml
