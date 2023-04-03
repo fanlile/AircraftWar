@@ -1,5 +1,9 @@
 package edu.hitsz.application;
 
+import edu.hitsz.factory.BossEnemyFactory;
+import edu.hitsz.factory.EliteEnemyFactory;
+import edu.hitsz.factory.EnemyFactory;
+import edu.hitsz.factory.MobEnemyFactory;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
@@ -116,7 +120,6 @@ public class Game extends JPanel {
                         enemyFactory = new BossEnemyFactory();
                         enemy = enemyFactory.createEnemy();
                         enemyAircrafts.add(enemy);
-                        score += 10;
                         count += 1;
                     }
                     //生成精英敌机

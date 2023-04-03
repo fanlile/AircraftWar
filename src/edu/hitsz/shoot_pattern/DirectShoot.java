@@ -7,16 +7,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DirectShoot implements ShootStrategy {
-    /**
-     * 一次发射子弹的数量
-     */
-    private int shootNum = 1;
     @Override
-    public List<BaseBullet> shoot(int LocationX,int LocationY,int speedX,int speedY,int direction,int power) {
+    public List<BaseBullet> shoot(int LocationX,int LocationY,int speedY,int direction,int power,int shootNum) {
         List<BaseBullet> res = new LinkedList<>();
         int x = LocationX;
         int y = LocationY + direction*2;
-        speedX = 0;
+        int speedX = 0;
         speedY = speedY + direction*3;
         BaseBullet bullet;
         for(int i=0; i<shootNum; i++){

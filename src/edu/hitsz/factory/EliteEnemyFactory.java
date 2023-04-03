@@ -1,14 +1,11 @@
-package edu.hitsz.aircraft;
+package edu.hitsz.factory;
 
+import edu.hitsz.aircraft.EliteEnemy;
+import edu.hitsz.aircraft.Enemy;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
-import edu.hitsz.bullet.BaseBullet;
-import edu.hitsz.prop.BaseProp;
 
-import java.util.LinkedList;
-import java.util.List;
-
-public class EliteEnemyFactory implements EnemyFactory{
+public class EliteEnemyFactory implements EnemyFactory {
     @Override
     public Enemy createEnemy(){
         return new EliteEnemy(
