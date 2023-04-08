@@ -1,4 +1,4 @@
-package edu.hitsz.shoot_pattern;
+package edu.hitsz.Strategy;
 
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.HeroBullet;
@@ -7,10 +7,10 @@ import java.util.LinkedList;
 import java.util.List;
 public class ScatterShoot implements ShootStrategy {
     @Override
-    public List<BaseBullet> shoot(int LocationX,int LocationY,int speedY,int direction,int power,int shootNum){
+    public List<BaseBullet> shoot(int locationX,int locationY,int speedY,int direction,int power,int shootNum){
         List<BaseBullet> res = new LinkedList<>();
-        int x = LocationX;
-        int y = LocationY + direction*2;
+        int x = locationX;
+        int y = locationY + direction*2;
         int speedX = 0;
         speedY = speedY + direction*15;
         BaseBullet bullet;
