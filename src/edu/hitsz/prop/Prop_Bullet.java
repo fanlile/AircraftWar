@@ -1,5 +1,6 @@
 package edu.hitsz.prop;
 
+import edu.hitsz.Strategy.ScatterShoot;
 import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
@@ -10,7 +11,8 @@ public class Prop_Bullet extends BaseProp {
     }
     @Override
     public void active(HeroAircraft heroAircraft) {
-        System.out.println("FireSupply active!");
+        heroAircraft.setShootNum(3);
+        heroAircraft.setShootStrategy(new ScatterShoot());
     }
 }
 

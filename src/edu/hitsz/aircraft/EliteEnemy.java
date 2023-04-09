@@ -61,7 +61,7 @@ public class EliteEnemy extends Enemy {
      * @return 射击出的子弹List
      */
     public List<BaseBullet> shoot() {
-        return shootStrategy.shoot(locationX,locationY,speedY,direction,power,shootNum);
+        return shootStrategy.shoot(EnemyBullet.class,locationX,locationY,speedY,direction,power,shootNum);
     }
 
     @Override

@@ -15,5 +15,12 @@ public interface ShootStrategy {
      * @param shootNum 每次发射子弹数量
      * @return 子弹集合
      */
-    List<BaseBullet> shoot(int locationX,int locationY,int speedY,int direction,int power,int shootNum);
+    List<BaseBullet> shoot(Class <? extends BaseBullet > bulletClass,
+                           int locationX,
+                           int locationY,
+                           int speedY,
+                           int direction,
+                           int power,
+                           int shootNum
+    );
 }

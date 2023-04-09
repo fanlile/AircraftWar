@@ -2,7 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
-import edu.hitsz.bullet.BaseBullet;
+import edu.hitsz.bullet.*;
 import edu.hitsz.Strategy.*;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class HeroAircraft extends AbstractAircraft {
     /**
      * 子弹伤害
      */
-    private int power = 40;
+    private int power = 20;
 
     /**
      * 子弹射击方向 (向上发射：1，向下发射：-1)
@@ -52,13 +52,15 @@ public class HeroAircraft extends AbstractAircraft {
                             0,
                             3000
                     );
-                    heroAircraft.shootStrategy = new ScatterShoot();
+                    heroAircraft.shootStrategy = new DirectShoot();
                 }
             }
         }
         return heroAircraft;
     }
-
+    public void setShootNum(int shootNum){
+        this.shootNum = shootNum;
+    }
     public void increaseHp(int blood) {
         if(hp+blood >= maxHp) {
             hp = maxHp;
@@ -79,6 +81,6 @@ public class HeroAircraft extends AbstractAircraft {
      * @return 射击出的子弹List
      */
     public List<BaseBullet> shoot() {
-        return shootStrategy.shoot(locationX,locationY,speedY,direction,power,shootNum);
+        return shootStrategy.shoot(HeroBullet.class,locationX,locationY,speedY,direction,power,shootNum);
     }
 }
