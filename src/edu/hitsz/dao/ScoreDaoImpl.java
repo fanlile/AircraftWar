@@ -2,7 +2,11 @@ package edu.hitsz.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
+/**
+ * @author fll
+ */
 public class ScoreDaoImpl implements ScoreDao {
     private List<ScoreRecord> scoreRecords;
     public ScoreDaoImpl() {
@@ -27,6 +31,6 @@ public class ScoreDaoImpl implements ScoreDao {
      */
     @Override
     public void sort() {
-
+        Collections.sort(scoreRecords, (b,a)->{return a.getScore() - b.getScore();});
     }
 }

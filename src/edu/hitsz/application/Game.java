@@ -352,8 +352,15 @@ public class Game extends JPanel {
             e.printStackTrace();
         }
         scoreDao.sort();
+        int i = 1;
         for(ScoreRecord scoreRecord: scoreDao.getAllRecord()) {
-            System.out.println(scoreRecord.getUserName()+","+scoreRecord.getScore()+","+scoreRecord.getTime());
+            System.out.println(
+                    "第"+i+"名："+"\t"+
+                    scoreRecord.getUserName()+"\t"+
+                    scoreRecord.getScore()+"\t"+"\t"+
+                    scoreRecord.getTime()
+            );
+            i += 1;
         }
     }
 
