@@ -338,7 +338,7 @@ public class Game extends JPanel {
         ScoreDao scoreDao = new ScoreDaoImpl();
         //将存放在本地文件中的数据读入到程序中
         try {
-            File file = new File("F:\\大二下\\面向对象\\实验\\AircraftWar\\scoreRecord.txt");
+            File file = new File("scoreRecord.txt");
             Scanner scanner = new Scanner(file);
             // 判断文件是否还有下一行，如果有则读取
             while (scanner.hasNextLine()) {
