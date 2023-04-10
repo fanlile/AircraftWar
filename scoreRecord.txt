@@ -1,9 +1,7 @@
-10，testUserName，04 10 15:15
-20，testUserName，04-10 15:16
-40，testUserName，04-10 15:19
-20，testUserName，04-10 15:21
-0，testUserName，04-10 15:23
-90，testUserName，04-10 15:24
-0，testUserName，04-10 15:26
-40，testUserName，04-10 15:27
-0，testUserName，04-10 15:29
+testUserName，30，04-10 18:12
+testUserName，90，04-10 18:13
+testUserName，0，04-10 18:22
+testUserName，340，04-10 18:23
+testUserName，80，04-10 19:11
+testUserName，40，04-10 19:11
+testUserName，1860，04-10 19:49

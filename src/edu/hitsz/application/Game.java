@@ -1,5 +1,6 @@
 package edu.hitsz.application;
 
+import edu.hitsz.dao.*;
 import edu.hitsz.factory.BossEnemyFactory;
 import edu.hitsz.factory.EliteEnemyFactory;
 import edu.hitsz.factory.EnemyFactory;
@@ -318,7 +319,7 @@ public class Game extends JPanel {
             FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
 
-            bw.write(score_+"，testUserName，"+formattedDateTime);
+            bw.write("testUserName，"+score_+"，"+formattedDateTime);
             bw.newLine();
 
             bw.close();
@@ -334,17 +335,25 @@ public class Game extends JPanel {
         System.out.println("************************************************");
         System.out.println("                    得分排行榜                    ");
         System.out.println("************************************************");
+        ScoreDao scoreDao = new ScoreDaoImpl();
+        //将存放在本地文件中的数据读入到程序中
         try {
             File file = new File("F:\\大二下\\面向对象\\实验\\AircraftWar\\scoreRecord.txt");
             Scanner scanner = new Scanner(file);
             // 判断文件是否还有下一行，如果有则读取
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                System.out.println(line);
+                //将字符串按逗号分隔，放入字符串数组中
+                String[] parts = line.split("，");
+                scoreDao.doAdd(new ScoreRecord(parts[0],Integer.parseInt(parts[1]),parts[2]));
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+        scoreDao.sort();
+        for(ScoreRecord scoreRecord: scoreDao.getAllRecord()) {
+            System.out.println(scoreRecord.getUserName()+","+scoreRecord.getScore()+","+scoreRecord.getTime());
         }
     }
 
