@@ -14,6 +14,14 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.Date;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -162,6 +170,8 @@ public class Game extends JPanel {
                 // 游戏结束
                 executorService.shutdown();
                 gameOverFlag = true;
+                writeFile();
+                outputFile();
                 System.out.println("Game Over!");
             }
 
@@ -295,6 +305,48 @@ public class Game extends JPanel {
         baseProps.removeIf(AbstractFlyingObject::notValid);
     }
 
+    /**
+     *将得分数据写入本地文件
+     */
+    private void writeFile() {
+        String score_ = Integer.toString(score);
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd HH:mm");
+        String formattedDateTime = formatter.format(date);
+        File file = new File("F:\\大二下\\面向对象\\实验\\AircraftWar\\scoreRecord.txt");
+        try {
+            FileWriter fw = new FileWriter(file, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            bw.write(score_+"，testUserName，"+formattedDateTime);
+            bw.newLine();
+
+            bw.close();
+            fw.close();
+
+            System.out.println("Data has been written to " + file);
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    private void outputFile() {
+        System.out.println("************************************************");
+        System.out.println("                    得分排行榜                    ");
+        System.out.println("************************************************");
+        try {
+            File file = new File("F:\\大二下\\面向对象\\实验\\AircraftWar\\scoreRecord.txt");
+            Scanner scanner = new Scanner(file);
+            // 判断文件是否还有下一行，如果有则读取
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                System.out.println(line);
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     //***********************
     //      Paint 各部分

@@ -2,7 +2,7 @@ package edu.hitsz.aircraft;
 
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.basic.AbstractFlyingObject;
-import edu.hitsz.Strategy.*;
+import edu.hitsz.strategy.*;
 
 import java.util.List;
 

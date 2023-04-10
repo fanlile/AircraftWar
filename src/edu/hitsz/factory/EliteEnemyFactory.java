@@ -4,7 +4,7 @@ import edu.hitsz.aircraft.EliteEnemy;
 import edu.hitsz.aircraft.Enemy;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
-import edu.hitsz.Strategy.DirectShoot;
+import edu.hitsz.strategy.DirectShoot;
 
 public class EliteEnemyFactory implements EnemyFactory {
     @Override

@@ -1,4 +1,4 @@
-package edu.hitsz.Strategy;
+package edu.hitsz.strategy;
 
 import edu.hitsz.bullet.BaseBullet;
 

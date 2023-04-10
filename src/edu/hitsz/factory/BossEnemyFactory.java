@@ -4,7 +4,7 @@ import edu.hitsz.aircraft.BossEnemy;
 import edu.hitsz.aircraft.Enemy;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
-import edu.hitsz.Strategy.ScatterShoot;
+import edu.hitsz.strategy.ScatterShoot;
 
 public class BossEnemyFactory implements EnemyFactory {
     @Override

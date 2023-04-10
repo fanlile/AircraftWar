@@ -3,7 +3,7 @@ package edu.hitsz.aircraft;
 import edu.hitsz.application.ImageManager;
 import edu.hitsz.application.Main;
 import edu.hitsz.bullet.*;
-import edu.hitsz.Strategy.*;
+import edu.hitsz.strategy.*;
 
 import java.util.List;
 

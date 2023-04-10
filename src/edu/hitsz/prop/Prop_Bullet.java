@@ -1,9 +1,7 @@
 package edu.hitsz.prop;
 
-import edu.hitsz.Strategy.ScatterShoot;
+import edu.hitsz.strategy.ScatterShoot;
 import edu.hitsz.aircraft.HeroAircraft;
-import edu.hitsz.application.Main;
-import edu.hitsz.basic.AbstractFlyingObject;
 
 public class Prop_Bullet extends BaseProp {
     public Prop_Bullet(int locationX, int locationY, int speedX, int speedY) {

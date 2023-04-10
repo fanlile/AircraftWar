@@ -1,4 +1,4 @@
-package edu.hitsz.Strategy;
+package edu.hitsz.strategy;
 
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
@@ -6,29 +6,30 @@ import edu.hitsz.bullet.HeroBullet;
 
 import java.util.LinkedList;
 import java.util.List;
-/**
- * @author fll
- */
-public class ScatterShoot implements ShootStrategy {
+
+public class DirectShoot implements ShootStrategy {
     @Override
-    public List<BaseBullet> shoot(Class <? extends BaseBullet > bulletClass,int locationX,int locationY,int speedY,int direction,int power,int shootNum){
+    public List<BaseBullet> shoot(Class <? extends BaseBullet > bulletClass,int locationX,int locationY,int speedY,int direction,int power,int shootNum) {
         List<BaseBullet> res = new LinkedList<>();
+        int x = locationX;
+        int y = locationY + direction*2;
+        int speedX = 0;
         BaseBullet bullet;
         if(bulletClass.equals(HeroBullet.class)){
-            speedY = speedY + direction*15;
+            speedY = speedY + direction*12;
             for(int i=0; i<shootNum; i++){
                 // 子弹发射位置相对飞机位置向前偏移
                 // 多个子弹横向分散
-                bullet = new HeroBullet(locationX + (i*2 - shootNum + 1)*10, locationY, i*2 - shootNum +1, speedY, power);
+                bullet = new HeroBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
                 res.add(bullet);
             }
         }
         else {
-            speedY = speedY + direction*5;
+            speedY = speedY + direction*3;
             for(int i=0; i<shootNum; i++){
                 // 子弹发射位置相对飞机位置向前偏移
                 // 多个子弹横向分散
-                bullet = new EnemyBullet(locationX + (i*2 - shootNum + 1)*10, locationY+95, i*2 - shootNum +1, speedY, power);
+                bullet = new EnemyBullet(x + (i*2 - shootNum + 1)*10, y, speedX, speedY, power);
                 res.add(bullet);
             }
         }
