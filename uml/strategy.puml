@@ -1,0 +1,30 @@
+@startuml
+Class Game{}
+Class AbstractAircraft{
+    # shootStrategy:ShootStrategy
+    + AbstractAircraft(ShootStrategy shootStrategy)
+    + setShootStrategy(ShootStrategy shootStrategy):void
+    + {abstract} shoot():List<BaseBullet>
+}
+
+Game ..> AbstractAircraft
+
+interface ShootStrategy {
+    + shoot(Class <? extends BaseBullet > bulletClass,int locationX,int locationY,int speedY,int direction,int power,int shootNum):List<BaseBullet>
+}
+
+AbstractAircraft o--> ShootStrategy
+
+Class DirectShoot{
+    + + shoot(Class <? extends BaseBullet > bulletClass,int locationX,int locationY,int speedY,int direction,int power,int shootNum):List<BaseBullet>
+}
+
+ShootStrategy <|.. DirectShoot
+
+Class ScatterShoot{
+    + + shoot(Class <? extends BaseBullet > bulletClass,int locationX,int locationY,int speedY,int direction,int power,int shootNum):List<BaseBullet>
+}
+
+ShootStrategy <|.. ScatterShoot
+
+@enduml

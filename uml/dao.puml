@@ -1,0 +1,34 @@
+@startuml
+class Game{}
+interface ScoreDao{
+    + getAllRecord():List<ScoreRecord>
+    + doAdd(ScoreRecord scoreRecord):void
+    + sort():void
+    + writeFile(int score):void
+    + outputFile():void
+}
+Game ..> ScoreDao
+class ScoreDaoImpl {
+    - scoreRecords:List<ScoreRecord>
+    + ScoreDaoImpl()
+    + getAllRecord():List<ScoreRecord>
+    + doAdd(ScoreRecord scoreRecord):void
+    + sort():void
+    + writeFile(int score):void
+    + outputFile():void
+}
+
+ScoreDao <|.. ScoreDaoImpl
+
+class ScoreRecord {
+    - userName:String
+    - score:int
+    - time:String
+    + getUserName():String
+    + getScore():int
+    + getTime():String
+}
+
+ScoreDaoImpl --> ScoreRecord
+
+@enduml

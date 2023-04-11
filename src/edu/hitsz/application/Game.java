@@ -171,8 +171,9 @@ public class Game extends JPanel {
                 // 游戏结束
                 executorService.shutdown();
                 gameOverFlag = true;
-                writeFile();
-                outputFile();
+                ScoreDao scoreDao = new ScoreDaoImpl();
+                scoreDao.writeFile(score);
+                scoreDao.outputFile();
                 System.out.println("Game Over!");
             }
 
@@ -304,64 +305,6 @@ public class Game extends JPanel {
         heroBullets.removeIf(AbstractFlyingObject::notValid);
         enemyAircrafts.removeIf(AbstractFlyingObject::notValid);
         baseProps.removeIf(AbstractFlyingObject::notValid);
-    }
-
-    /**
-     *将得分数据写入本地文件
-     */
-    private void writeFile() {
-        String score_ = Integer.toString(score);
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd HH:mm");
-        String formattedDateTime = formatter.format(date);
-        File file = new File("F:\\大二下\\面向对象\\实验\\AircraftWar\\scoreRecord.txt");
-        try {
-            FileWriter fw = new FileWriter(file, true);
-            BufferedWriter bw = new BufferedWriter(fw);
-
-            bw.write("testUserName，"+score_+"，"+formattedDateTime);
-            bw.newLine();
-
-            bw.close();
-            fw.close();
-
-            System.out.println("Data has been written to " + file);
-        } catch (IOException e) {
-            System.out.println("An error occurred: " + e.getMessage());
-        }
-    }
-
-    private void outputFile() {
-        System.out.println("************************************************");
-        System.out.println("                    得分排行榜                    ");
-        System.out.println("************************************************");
-        ScoreDao scoreDao = new ScoreDaoImpl();
-        //将存放在本地文件中的数据读入到程序中
-        try {
-            File file = new File("scoreRecord.txt");
-            Scanner scanner = new Scanner(file);
-            // 判断文件是否还有下一行，如果有则读取
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                //将字符串按逗号分隔，放入字符串数组中
-                String[] parts = line.split("，");
-                scoreDao.doAdd(new ScoreRecord(parts[0],Integer.parseInt(parts[1]),parts[2]));
-            }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        scoreDao.sort();
-        int i = 1;
-        for(ScoreRecord scoreRecord: scoreDao.getAllRecord()) {
-            System.out.println(
-                    "第"+i+"名："+"\t"+
-                    scoreRecord.getUserName()+"\t"+
-                    scoreRecord.getScore()+"\t"+"\t"+
-                    scoreRecord.getTime()
-            );
-            i += 1;
-        }
     }
 
     //***********************
