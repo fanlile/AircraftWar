@@ -1,5 +1,11 @@
-package edu.hitsz.application;
+package edu.hitsz.application.Game;
 
+import edu.hitsz.application.HeroController;
+import edu.hitsz.application.ImageManager;
+import edu.hitsz.application.Main;
+import edu.hitsz.application.Menu.Input;
+import edu.hitsz.application.Menu.StartMenu;
+import edu.hitsz.application.MusicThread;
 import edu.hitsz.dao.*;
 import edu.hitsz.factory.BossEnemyFactory;
 import edu.hitsz.factory.EliteEnemyFactory;
@@ -88,6 +94,25 @@ public class Game extends JPanel {
      * 记录boss机已经产生的数量，防止反复生成
      */
     private int count = 0;
+    public ScoreDao scoreDao;
+
+    /**
+     * 游戏难度等级
+     */
+    private static String difficulty;
+    /**
+     * 音频
+     */
+    MusicThread bgm;
+    MusicThread bossBgm;
+    private static boolean needMusic = true;
+    private static boolean bossVaild = false;
+    private static boolean bossVailded = false;
+
+    /**
+     * 排行榜文件路径
+     */
+    private static String pathName;
     public Game() {
         heroAircraft = HeroAircraft.getHeroAircraft();
 
@@ -108,6 +133,15 @@ public class Game extends JPanel {
 
     }
 
+    public static void setDifficulty(String difficulty){
+        Game.difficulty = difficulty;
+    }
+    public static String getDifficulty(){
+        return Game.difficulty;
+    }
+    public static void setPathName(String pathName){
+        Game.pathName = pathName;
+    }
     /**
      * 游戏启动入口，执行游戏逻辑
      */
@@ -129,6 +163,8 @@ public class Game extends JPanel {
                         enemyFactory = new BossEnemyFactory();
                         enemy = enemyFactory.createEnemy();
                         enemyAircrafts.add(enemy);
+                        bossVaild = true;
+                        bossVailded = true;
                         count += 1;
                     }
                     //生成精英敌机
@@ -160,6 +196,11 @@ public class Game extends JPanel {
             // 撞击检测
             crashCheckAction();
 
+            //检查音乐
+            if (needMusic) {
+                musicCheck();
+            }
+
             // 后处理
             postProcessAction();
 
@@ -171,9 +212,22 @@ public class Game extends JPanel {
                 // 游戏结束
                 executorService.shutdown();
                 gameOverFlag = true;
-                ScoreDao scoreDao = new ScoreDaoImpl();
-                scoreDao.writeFile(score);
-                scoreDao.outputFile();
+                // 停止播放背景音乐和boss音乐,并播放结束音乐
+                if (needMusic) {
+                    bgm.stop();
+                    if (bossVailded) {
+                        bossBgm.stop();
+                    }
+                    new MusicThread("src/videos/game_over.wav").start();
+                }
+                scoreDao = new ScoreDaoImpl();
+                // 保存游戏记录并展示排行榜
+                JFrame frame = new JFrame("UserName");
+                frame.setContentPane(new Input(scoreDao,score,pathName).mainPanel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+
                 System.out.println("Game Over!");
             }
 
@@ -203,7 +257,7 @@ public class Game extends JPanel {
     }
 
     private void shootAction() {
-        // TODO 敌机射击
+        // 敌机射击
         for(Enemy enemyAircraft : enemyAircrafts) {
             enemyBullets.addAll(enemyAircraft.shoot());
         }
@@ -239,7 +293,7 @@ public class Game extends JPanel {
      * 3. 英雄获得补给
      */
     private void crashCheckAction() {
-        // TODO 敌机子弹攻击英雄
+        // 敌机子弹攻击英雄
         for (BaseBullet bullet : enemyBullets) {
             if (bullet.notValid()) {
                 continue;
@@ -264,16 +318,22 @@ public class Game extends JPanel {
                 if (enemyAircraft.crash(bullet)) {
                     // 敌机撞击到英雄机子弹
                     // 敌机损失一定生命值
+                    if (needMusic) {
+                        new MusicThread("src/videos/bullet_hit.wav").start();
+                    }
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
 
                     if (enemyAircraft.notValid()) {
-                        // TODO 获得分数，产生道具补给
+                        // 获得分数，产生道具补给
+                        if (enemyAircraft instanceof BossEnemy) {
+                           bossVaild = false;
+                        }
                         baseProps.addAll(enemyAircraft.drop_prop());
                         score = enemyAircraft.increaseScore(score);
                     }
                 }
-                // 英雄机 与 敌机 相撞，均损毁
+                // 英雄机与敌机相撞，均损毁
                 if (enemyAircraft.crash(heroAircraft) || heroAircraft.crash(enemyAircraft)) {
                     enemyAircraft.vanish();
                     heroAircraft.decreaseHp(Integer.MAX_VALUE);
@@ -281,16 +341,43 @@ public class Game extends JPanel {
             }
         }
 
-        // TODO 我方获得道具，道具生效
+        // 我方获得道具，道具生效
         for (BaseProp baseProp : baseProps) {
             if (baseProp.notValid()) {
                 continue;
             }
             if (heroAircraft.crash(baseProp)) {
-                baseProp.active(heroAircraft);
+                baseProp.active(heroAircraft,needMusic);
                 baseProp.vanish();
             }
         }
+    }
+
+    /**
+     * 控制背景音乐与boss音乐播放
+     */
+    private void musicCheck() {
+        //boss音乐
+        if (bossVaild) {
+            // 存在boss机，停止播放背景音乐
+            bgm.stop();
+            // 播放boss机背景音乐
+            if (bossBgm == null || !bossBgm.isAlive()) {
+                bossBgm = new MusicThread("src/videos/bgm_boss.wav");
+                bossBgm.start();
+            }
+        }
+        else {
+            if (bossVailded) {
+                bossBgm.stop();
+            }
+            // 循环播放背景音乐
+            if ((bgm == null || !bgm.isAlive()) && bossVaild == false) {
+                bgm = new MusicThread("src/videos/bgm.wav");
+                bgm.start();
+            }
+        }
+
     }
 
     /**

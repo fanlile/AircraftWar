@@ -1,13 +1,13 @@
 package edu.hitsz.dao;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * @author fll
  */
 public class ScoreDaoImpl implements ScoreDao {
+    private String pathName;
     private List<ScoreRecord> scoreRecords;
     public ScoreDaoImpl() {
         scoreRecords = new ArrayList<ScoreRecord>();
@@ -33,28 +33,29 @@ public class ScoreDaoImpl implements ScoreDao {
     public void sort() {
         Collections.sort(scoreRecords, (b,a)->{return a.getScore() - b.getScore();});
     }
-
+    /**
+     * 设置文件路径
+     */
+    @Override
+    public void setPathName(String pathName){
+        this.pathName = pathName;
+    }
     /**
      *将得分数据写入本地文件
      */
     @Override
-    public void writeFile(int score) {
+    public void writeFile(String userName,int score,String formattedDateTime) {
         String score_ = Integer.toString(score);
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("MM-dd HH:mm");
-        String formattedDateTime = formatter.format(date);
-        File file = new File("scoreRecord.txt");
+        File file = new File(pathName);
         try {
             FileWriter fw = new FileWriter(file, true);
             BufferedWriter bw = new BufferedWriter(fw);
 
-            bw.write("testUserName，"+score_+"，"+formattedDateTime);
+            bw.write(userName+"，"+score_+"，"+formattedDateTime);
             bw.newLine();
 
             bw.close();
             fw.close();
-
-            System.out.println("Data has been written to " + file);
         } catch (IOException e) {
             System.out.println("An error occurred: " + e.getMessage());
         }
@@ -64,12 +65,9 @@ public class ScoreDaoImpl implements ScoreDao {
      */
     @Override
     public void outputFile() {
-        System.out.println("********************************************");
-        System.out.println("                  得分排行榜                  ");
-        System.out.println("********************************************");
         //将存放在本地文件中的数据读入到程序中
         try {
-            File file = new File("scoreRecord.txt");
+            File file = new File(pathName);
             Scanner scanner = new Scanner(file);
             // 判断文件是否还有下一行，如果有则读取
             while (scanner.hasNextLine()) {
@@ -81,17 +79,6 @@ public class ScoreDaoImpl implements ScoreDao {
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        sort();
-        int i = 1;
-        for(ScoreRecord scoreRecord: scoreRecords) {
-            System.out.println(
-                    "第"+i+"名："+"\t"+
-                            scoreRecord.getUserName()+"\t"+
-                            scoreRecord.getScore()+"\t"+"\t"+
-                            scoreRecord.getTime()
-            );
-            i += 1;
         }
     }
 }

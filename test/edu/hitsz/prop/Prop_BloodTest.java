@@ -39,7 +39,7 @@ class Prop_BloodTest {
     void active() {
         System.out.println("**--- Test active method executed ---**");
         heroAircraft.decreaseHp(500);
-        prop_blood.active(heroAircraft);
+        prop_blood.active(heroAircraft,true);
         assertEquals(2600,heroAircraft.getHp());
     }
 

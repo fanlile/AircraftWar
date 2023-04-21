@@ -28,7 +28,7 @@ public abstract class BaseProp extends AbstractFlyingObject {
      * 道具生效方法
      * @param heroAircraft
      */
-    public abstract void active(HeroAircraft heroAircraft);
+    public abstract void active(HeroAircraft heroAircraft,boolean needMusic);
 
 }
 

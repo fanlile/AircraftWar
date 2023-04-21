@@ -2,6 +2,7 @@ package edu.hitsz.prop;
 
 import edu.hitsz.application.Main;
 import edu.hitsz.aircraft.*;
+import edu.hitsz.application.MusicThread;
 import edu.hitsz.basic.AbstractFlyingObject;
 
 public class Prop_Blood extends BaseProp {
@@ -11,7 +12,10 @@ public class Prop_Blood extends BaseProp {
         this.blood = blood;
     }
     @Override
-    public void active(HeroAircraft heroAircraft) {
+    public void active(HeroAircraft heroAircraft,boolean needMusic) {
+        if (needMusic) {
+           new MusicThread("src/videos/get_supply.wav").start();
+        }
         heroAircraft.increaseHp(blood);
     }
 }
