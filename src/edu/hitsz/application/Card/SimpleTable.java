@@ -1,4 +1,4 @@
-package edu.hitsz.application.Menu;
+package edu.hitsz.application.Card;
 
 import edu.hitsz.dao.ScoreDao;
 import edu.hitsz.dao.ScoreRecord;
@@ -11,16 +11,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-public class EasyTable {
+/**
+ * @author fanlile
+ */
+public class SimpleTable {
     private JPanel mainPanel;
     private JPanel topPanel;
+    private JPanel bottomPanel;
     private JButton deleteButton;
     private JTable scoreTable;
     private JLabel headerLable;
-    private JPanel bottomPanel;
     private JScrollPane tableScrollPanel;
     private List<ScoreRecord> scoreRecords;
-    public EasyTable(ScoreDao scoreDao) {
+    public SimpleTable(ScoreDao scoreDao) {
         String[] columnName = {"名次","玩家昵称","分数","时间"};
         scoreDao.outputFile();
         scoreDao.sort();
@@ -54,7 +57,7 @@ public class EasyTable {
                     scoreRecords.remove(row);
                     // 将本地文件中的排行榜清空
                     try {
-                        FileWriter writer = new FileWriter("easy.txt", false);
+                        FileWriter writer = new FileWriter("simple.txt", false);
                     } catch (IOException ex) {throw new RuntimeException(ex);}
                     // 将删除指定行后的得分记录重新写入本地文件
                     for(ScoreRecord scoreRecord : scoreRecords){

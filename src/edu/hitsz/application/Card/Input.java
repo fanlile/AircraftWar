@@ -1,6 +1,5 @@
-package edu.hitsz.application.Menu;
+package edu.hitsz.application.Card;
 
-import edu.hitsz.application.Status;
 import edu.hitsz.dao.ScoreDao;
 
 import javax.swing.*;
@@ -8,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author fll
@@ -19,14 +19,17 @@ public class Input {
     private JLabel nameLable;
     private JLabel score;
     private JTextField inputName;
-    private JButton yes;
+    private JButton confirm;
     private JLabel gameScore;
     private String userName;
 
 
 public Input(ScoreDao scoreDao,int score,String pathName) {
+
+    //显示得分
     gameScore.setText(String.valueOf(score));
-    yes.addActionListener(new ActionListener() {
+
+    confirm.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             // 获取玩家昵称
@@ -39,20 +42,18 @@ public Input(ScoreDao scoreDao,int score,String pathName) {
             scoreDao.setPathName(pathName);
             // 将得分记录写入本地文件
             scoreDao.writeFile(userName,score,formattedDateTime);
-            //Status.inputOver = true;
-            JFrame frame = new JFrame("排行榜");
-            if(pathName == "easy.txt"){
-                frame.setContentPane(new EasyTable(scoreDao).getMainPanel());
+
+            //展示排行榜
+            if(Objects.equals(pathName, "easy.txt")){
+                Main.cardPanel.add(new EasyTable(scoreDao).getMainPanel());
             }
-            else if (pathName == "simple.txt") {
-                frame.setContentPane(new SimpleTable(scoreDao).getMainPanel());
+            else if (Objects.equals(pathName, "simple.txt")) {
+                Main.cardPanel.add(new SimpleTable(scoreDao).getMainPanel());
             }
             else {
-                frame.setContentPane(new DifficultTable(scoreDao).getMainPanel());
+                Main.cardPanel.add(new DifficultTable(scoreDao).getMainPanel());
             }
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);
+            Main.cardLayout.last(Main.cardPanel);
         }
     });
 }

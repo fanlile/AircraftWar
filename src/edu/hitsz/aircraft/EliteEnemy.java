@@ -1,6 +1,6 @@
 package edu.hitsz.aircraft;
 
-import edu.hitsz.application.Main;
+import edu.hitsz.application.Card.Main;
 import edu.hitsz.bullet.*;
 import edu.hitsz.prop.*;
 import edu.hitsz.factory.BasePropFactory;

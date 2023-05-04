@@ -1,10 +1,9 @@
 package edu.hitsz.prop;
 
 import edu.hitsz.aircraft.HeroAircraft;
-import edu.hitsz.application.Main;
+import edu.hitsz.application.Card.Main;
 import edu.hitsz.basic.AbstractFlyingObject;
 
-import java.util.List;
 /**
  *道具类
  * 加血道具、火力道具、炸弹道具

@@ -1,9 +1,8 @@
 package edu.hitsz.basic;
 
 import edu.hitsz.aircraft.AbstractAircraft;
-import edu.hitsz.aircraft.HeroAircraft;
 import edu.hitsz.application.ImageManager;
-import edu.hitsz.application.Main;
+import edu.hitsz.application.Card.Main;
 
 import java.awt.image.BufferedImage;
 

@@ -3,7 +3,7 @@ package edu.hitsz.factory;
 import edu.hitsz.aircraft.Enemy;
 import edu.hitsz.aircraft.MobEnemy;
 import edu.hitsz.application.ImageManager;
-import edu.hitsz.application.Main;
+import edu.hitsz.application.Card.Main;
 
 public class MobEnemyFactory implements EnemyFactory {
     @Override

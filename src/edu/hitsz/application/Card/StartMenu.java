@@ -1,9 +1,7 @@
-package edu.hitsz.application.Menu;
+package edu.hitsz.application.Card;
 
 import edu.hitsz.application.Game.*;
 import edu.hitsz.application.ImageManager;
-import edu.hitsz.application.Main;
-import edu.hitsz.application.Status;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * @author fll
+ */
 public class StartMenu {
     private JPanel mainPanel;
     private JPanel startMenu;
@@ -21,6 +22,8 @@ public class StartMenu {
     private JLabel label;
     private JRadioButton music;
     private static JFrame frame;
+    private static Game game;
+    public static boolean needMusic = true;
     public StartMenu() {
         easy.addActionListener(new ActionListener() {
             @Override
@@ -32,10 +35,10 @@ public class StartMenu {
                 }
                 Game.setDifficulty("Easy");
                 Game.setPathName("easy.txt");
-                Status.menuOver = true;
-                synchronized (Status.class) {
-                    Status.class.notifyAll();
-                }
+                game = new EasyGame();
+                Main.cardPanel.add(game);
+                Main.cardLayout.last(Main.cardPanel);
+                game.action();
             }
         });
         simple.addActionListener(new ActionListener() {
@@ -48,10 +51,10 @@ public class StartMenu {
                 }
                 Game.setDifficulty("Simple");
                 Game.setPathName("simple.txt");
-                Status.menuOver = true;
-                synchronized (Status.class) {
-                    Status.class.notifyAll();
-                }
+                game = new SimpleGame();
+                Main.cardPanel.add(game);
+                Main.cardLayout.last(Main.cardPanel);
+                game.action();
             }
         });
         difficult.addActionListener(new ActionListener() {
@@ -64,28 +67,19 @@ public class StartMenu {
                 }
                 Game.setDifficulty("Difficult");
                 Game.setPathName("difficult.txt");
-                Status.menuOver = true;
-                synchronized (Status.class) {
-                    Status.class.notifyAll();
-                }
+                game = new DifficultGame();
+                Main.cardPanel.add(game);
+                Main.cardLayout.last(Main.cardPanel);
+                game.action();
             }
         });
         music.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("音乐打开");
+                needMusic = !needMusic;
             }
         });
     }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("StartMenu");
-        frame.setContentPane(new StartMenu().mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-    }
-
     public JPanel getMainPanel() {
         return mainPanel;
     }

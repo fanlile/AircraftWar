@@ -1,9 +1,7 @@
 package edu.hitsz.prop;
 
-import edu.hitsz.application.Main;
 import edu.hitsz.aircraft.*;
 import edu.hitsz.application.MusicThread;
-import edu.hitsz.basic.AbstractFlyingObject;
 
 public class Prop_Blood extends BaseProp {
     protected int blood;

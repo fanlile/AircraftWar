@@ -1,24 +1,19 @@
-package edu.hitsz.application.Menu;
+package edu.hitsz.application.Card;
 
-import edu.hitsz.dao.ScoreDao;
-import edu.hitsz.dao.ScoreRecord;
+import edu.hitsz.dao.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
 /**
- * @author fanlile
+ * @author fll
  */
-public class SimpleTable {
+public class DifficultTable {
     private JPanel mainPanel;
     private JPanel topPanel;
     private JPanel bottomPanel;
@@ -27,7 +22,8 @@ public class SimpleTable {
     private JLabel headerLable;
     private JScrollPane tableScrollPanel;
     private List<ScoreRecord> scoreRecords;
-    public SimpleTable(ScoreDao scoreDao) {
+
+    public DifficultTable(ScoreDao scoreDao) {
         String[] columnName = {"名次","玩家昵称","分数","时间"};
         scoreDao.outputFile();
         scoreDao.sort();
@@ -61,7 +57,7 @@ public class SimpleTable {
                     scoreRecords.remove(row);
                     // 将本地文件中的排行榜清空
                     try {
-                        FileWriter writer = new FileWriter("simple.txt", false);
+                        FileWriter writer = new FileWriter("difficult.txt", false);
                     } catch (IOException ex) {throw new RuntimeException(ex);}
                     // 将删除指定行后的得分记录重新写入本地文件
                     for(ScoreRecord scoreRecord : scoreRecords){

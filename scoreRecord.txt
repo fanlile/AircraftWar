@@ -1,5 +1,0 @@
-testUserName，30，04-10 18:12
-testUserName，90，04-10 18:13
-testUserName，0，04-10 18:22
-testUserName，340，04-10 18:23
-testUserName，940，04-10 21:14

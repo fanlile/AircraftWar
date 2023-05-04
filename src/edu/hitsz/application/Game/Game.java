@@ -2,9 +2,9 @@ package edu.hitsz.application.Game;
 
 import edu.hitsz.application.HeroController;
 import edu.hitsz.application.ImageManager;
-import edu.hitsz.application.Main;
-import edu.hitsz.application.Menu.Input;
-import edu.hitsz.application.Menu.StartMenu;
+import edu.hitsz.application.Card.Main;
+import edu.hitsz.application.Card.Input;
+import edu.hitsz.application.Card.StartMenu;
 import edu.hitsz.application.MusicThread;
 import edu.hitsz.dao.*;
 import edu.hitsz.factory.BossEnemyFactory;
@@ -21,14 +21,6 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-import java.util.Date;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -36,7 +28,7 @@ import java.util.concurrent.*;
 /**
  * 游戏主面板，游戏启动
  *
- * @author hitsz
+ * @author fll
  */
 public class Game extends JPanel {
 
@@ -54,7 +46,7 @@ public class Game extends JPanel {
     /**
      * boss机生成分数阈值
      */
-    private int boss_threshold = 600;
+    private int boss_threshold = 300;
 
     private final HeroAircraft heroAircraft;
     private final List<Enemy> enemyAircrafts;
@@ -105,7 +97,7 @@ public class Game extends JPanel {
      */
     MusicThread bgm;
     MusicThread bossBgm;
-    private static boolean needMusic = true;
+    //private static boolean needMusic = true;
     private static boolean bossVaild = false;
     private static boolean bossVailded = false;
 
@@ -197,7 +189,7 @@ public class Game extends JPanel {
             crashCheckAction();
 
             //检查音乐
-            if (needMusic) {
+            if (StartMenu.needMusic) {
                 musicCheck();
             }
 
@@ -211,9 +203,8 @@ public class Game extends JPanel {
             if (heroAircraft.getHp() <= 0) {
                 // 游戏结束
                 executorService.shutdown();
-                gameOverFlag = true;
                 // 停止播放背景音乐和boss音乐,并播放结束音乐
-                if (needMusic) {
+                if (StartMenu.needMusic) {
                     bgm.stop();
                     if (bossVailded) {
                         bossBgm.stop();
@@ -222,11 +213,8 @@ public class Game extends JPanel {
                 }
                 scoreDao = new ScoreDaoImpl();
                 // 保存游戏记录并展示排行榜
-                JFrame frame = new JFrame("UserName");
-                frame.setContentPane(new Input(scoreDao,score,pathName).mainPanel);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
+                Main.cardPanel.add(new Input(scoreDao,score,pathName).mainPanel);
+                Main.cardLayout.last(Main.cardPanel);
 
                 System.out.println("Game Over!");
             }
@@ -318,7 +306,7 @@ public class Game extends JPanel {
                 if (enemyAircraft.crash(bullet)) {
                     // 敌机撞击到英雄机子弹
                     // 敌机损失一定生命值
-                    if (needMusic) {
+                    if (StartMenu.needMusic) {
                         new MusicThread("src/videos/bullet_hit.wav").start();
                     }
                     enemyAircraft.decreaseHp(bullet.getPower());
@@ -347,7 +335,7 @@ public class Game extends JPanel {
                 continue;
             }
             if (heroAircraft.crash(baseProp)) {
-                baseProp.active(heroAircraft,needMusic);
+                baseProp.active(heroAircraft,StartMenu.needMusic);
                 baseProp.vanish();
             }
         }
