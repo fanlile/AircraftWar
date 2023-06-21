@@ -1,6 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Card.Main;
+import edu.hitsz.application.Game.Game;
 import edu.hitsz.bullet.*;
 import edu.hitsz.prop.*;
 import edu.hitsz.factory.BasePropFactory;
@@ -71,33 +72,37 @@ public class EliteEnemy extends Enemy {
     }
     @Override
     public List<BaseProp> drop_prop() {
-        //System.out.println("掉落道具");
         List<BaseProp> props = new LinkedList<>();
         int x = this.getLocationX();
         int y = this.getLocationY() + direction*2;
-        int speedX = 0;
-        int speedY = this.getSpeedY() + direction*5;
-        BaseProp prop;
         Random r = new Random();
         int i = r.nextInt(10);
-        if(i >= 0 && i < 3){
+        if(i < 3){
             basepropFactory = new Prop_BloodFactory();
             baseProp = basepropFactory.createBaseProp(x,y);
             props.add(baseProp);
         }
-        else if(i >= 3 && i < 6){
+        else if(i < 6){
             basepropFactory = new Prop_BombFactory();
             baseProp = basepropFactory.createBaseProp(x,y);
             props.add(baseProp);
         }
-        else if(i >= 6 && i < 9){
+        else if(i < 9){
             basepropFactory = new Prop_BulletFactory();
             baseProp = basepropFactory.createBaseProp(x,y);
             props.add(baseProp);
         }
         else {
-            System.out.println("不生成道具");
+
         }
         return props;
+    }
+    @Override
+    public void bombActive(){
+        // 避免无效加分
+        if(isValid){
+            decreaseHp(hp);
+            Game.score += 30;
+        }
     }
 }

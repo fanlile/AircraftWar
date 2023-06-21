@@ -29,11 +29,11 @@ public class StartMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ImageManager.BACKGROUND_IMAGE = ImageIO.read(new FileInputStream("src/images/bg4.jpg"));
+                    ImageManager.BACKGROUND_IMAGE = ImageIO.read(new FileInputStream("src/images/bg1.jpg"));
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                Game.setDifficulty("Easy");
+                Game.setDifficulty(0);
                 Game.setPathName("easy.txt");
                 game = new EasyGame();
                 Main.cardPanel.add(game);
@@ -49,7 +49,7 @@ public class StartMenu {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                Game.setDifficulty("Simple");
+                Game.setDifficulty(1);
                 Game.setPathName("simple.txt");
                 game = new SimpleGame();
                 Main.cardPanel.add(game);
@@ -61,11 +61,11 @@ public class StartMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    ImageManager.BACKGROUND_IMAGE = ImageIO.read(new FileInputStream("src/images/bg2.jpg"));
+                    ImageManager.BACKGROUND_IMAGE = ImageIO.read(new FileInputStream("src/images/bg5.jpg"));
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                Game.setDifficulty("Difficult");
+                Game.setDifficulty(6);
                 Game.setPathName("difficult.txt");
                 game = new DifficultGame();
                 Main.cardPanel.add(game);

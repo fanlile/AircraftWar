@@ -1,16 +1,13 @@
 @startuml
 
 class HeroAircraft {
-    - shootNum:int
-    - power:int
-    - direction:int
     - heroAircraft:HeroAircraft
     - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
     + getHeroAircraft():HeroAircraft
-    + increaseHp(int blood):void
-    + forward():void
-    + shoot():List<BaseBullet>
-    + increaseScore(int score):int
-    + drop_prop():List<BaseProp>
 }
+class Game {
+    # heroAircraft:HeroAircraft
+}
+
+Game ..> HeroAircraft
 @enduml

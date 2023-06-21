@@ -1,5 +1,12 @@
 @startuml
-interface Enemy {
+class Game {
+    # enemyFactory:EnemyFactory
+    # enemy:Enemy
+}
+
+Game ..> EnemyFactory
+
+abstract class Enemy {
 
 }
 
@@ -9,13 +16,9 @@ interface EnemyFactory {
 
 class MobEnemy {
     + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + forward():void
-    + shoot():List<BaseBullet>
-    + increaseScore(int score):int
-    + drop_prop():List<BaseProp>
 }
 
-Enemy <|.. MobEnemy
+Enemy <|-- MobEnemy
 
 class MobEnemyFactory {
     + createEnemy():AbstractAircraft
@@ -25,17 +28,10 @@ EnemyFactory <|.. MobEnemyFactory
 MobEnemyFactory ..> MobEnemy
 
 class EliteEnemy {
-    - shootNum:int
-    - power:int
-    - direction:int
     + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
-    + forward():
-    + shoot():List<BaseBullet>
-    + increase(int score):int
-    + drop_prop():List<BaseProp>
 }
 
-Enemy <|.. EliteEnemy
+Enemy <|-- EliteEnemy
 
 class EliteEnemyFactory{
     + createEnemy():AbstractAircraft
@@ -43,4 +39,18 @@ class EliteEnemyFactory{
 
 EnemyFactory <|.. EliteEnemyFactory
 EliteEnemyFactory ..> EliteEnemy
+
+class BossEnemy {
+    + BossEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+}
+
+Enemy <|-- BossEnemy
+
+class BossEnemyFactory {
+
+}
+
+EnemyFactory <|.. BossEnemyFactory
+BossEnemyFactory ..> BossEnemy
+
 @enduml

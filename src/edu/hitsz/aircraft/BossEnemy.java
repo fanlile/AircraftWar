@@ -1,5 +1,6 @@
 package edu.hitsz.aircraft;
 
+import edu.hitsz.application.Game.Game;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.bullet.EnemyBullet;
 import edu.hitsz.prop.*;
@@ -12,6 +13,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author fll
+ */
 public class BossEnemy extends Enemy{
     /**攻击方式 */
 
@@ -60,31 +64,33 @@ public class BossEnemy extends Enemy{
         List<BaseProp> props = new LinkedList<>();
         int x = this.getLocationX();
         int y = this.getLocationY() + direction*2;
-        int speedX = 0;
-        int speedY = this.getSpeedY() + direction*5;
-        BaseProp prop;
         Random r = new Random();
-        //q为道具的横向偏移量
-        int q = -45;
-        for(int i = 0; i < 3 ;i++) {
+
+        for(int i = -1; i < 2 ;i++) {
             int m = r.nextInt(3);
             if(m == 0){
                 basepropFactory = new Prop_BloodFactory();
-                baseProp = basepropFactory.createBaseProp(x+q,y);
+                baseProp = basepropFactory.createBaseProp(x+45*i,y);
                 props.add(baseProp);
             }
             else if(m == 1){
                 basepropFactory = new Prop_BombFactory();
-                baseProp = basepropFactory.createBaseProp(x+q,y);
+                baseProp = basepropFactory.createBaseProp(x+45*i,y);
                 props.add(baseProp);
             }
             else {
                 basepropFactory = new Prop_BulletFactory();
-                baseProp = basepropFactory.createBaseProp(x+q,y);
+                baseProp = basepropFactory.createBaseProp(x+45*i,y);
                 props.add(baseProp);
             }
-            q += 45;
         }
         return props;
+    }
+    @Override
+    public void bombActive(){
+        decreaseHp(100);
+        if(!isValid){
+            Game.score += 200;
+        }
     }
 }

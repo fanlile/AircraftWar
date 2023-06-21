@@ -14,7 +14,7 @@ public class BossEnemyFactory implements EnemyFactory {
                 115,
                 5,
                 0,
-                400);
+                300);
         bossEnemy.setShootStrategy(new ScatterShoot());
         return bossEnemy;
     }

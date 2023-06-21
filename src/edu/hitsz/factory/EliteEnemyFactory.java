@@ -14,7 +14,7 @@ public class EliteEnemyFactory implements EnemyFactory {
                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
                 0,
                 5,
-                120);
+                60);
         eliteEnemy.setShootStrategy(new DirectShoot());
         return eliteEnemy;
     }

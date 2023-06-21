@@ -52,7 +52,7 @@ public class SimpleTable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int row = scoreTable.getSelectedRow();
-                int result = JOptionPane.showConfirmDialog(deleteButton, "是否确定中删除？");
+                int result = JOptionPane.showConfirmDialog(deleteButton, "是否确定删除？");
                 if (JOptionPane.YES_OPTION == result && row != -1) {
                     scoreRecords.remove(row);
                     // 将本地文件中的排行榜清空

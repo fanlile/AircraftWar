@@ -1,6 +1,7 @@
 package edu.hitsz.aircraft;
 
 import edu.hitsz.application.Card.Main;
+import edu.hitsz.application.Game.Game;
 import edu.hitsz.bullet.BaseBullet;
 import edu.hitsz.prop.BaseProp;
 
@@ -42,6 +43,14 @@ public class MobEnemy extends Enemy{
     public List<BaseProp> drop_prop() {
         //普通机不掉落道具
         return new LinkedList<>();
+    }
+    @Override
+    public void bombActive(){
+        // 避免无效加分
+        if(isValid){
+            decreaseHp(hp);
+            Game.score += 10;
+        }
     }
 }
 

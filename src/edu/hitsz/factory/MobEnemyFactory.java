@@ -13,6 +13,6 @@ public class MobEnemyFactory implements EnemyFactory {
                 (int) (Math.random() * Main.WINDOW_HEIGHT * 0.05),
                 0,
                 6,
-                30);
+                20);
     }
 }

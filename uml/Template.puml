@@ -1,0 +1,26 @@
+@startuml
+abstract class Game {
+    + newEnemy():void
+    + enemyShootAction():void
+    +
+    :boolean
+}
+class EasyGame {
+    + newEnemy():void
+    + enemyShootAction():void
+    + enemyTimeCountAndNewCycleJudge():boolean
+}
+Game <|-- EasyGame
+class SimpleGame {
+    + newEnemy():void
+    + enemyShootAction():void
+    + enemyTimeCountAndNewCycleJudge():boolean
+}
+Game <|-- SimpleGame
+class DifficultGame {
+    + newEnemy():void
+    + enemyShootAction():void
+    + enemyTimeCountAndNewCycleJudge():boolean
+}
+Game <|-- DifficultGame
+@enduml

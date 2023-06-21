@@ -1,4 +1,10 @@
 @startuml
+class Enemy {
+
+}
+
+Enemy ..> BasePropFactory
+
 abstract class BaseProp {
     + BaseProp(int locationX, int locationY,int speedX, int speedY)
     + forward():void

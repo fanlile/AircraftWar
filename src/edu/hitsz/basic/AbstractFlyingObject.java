@@ -166,5 +166,10 @@ public abstract class AbstractFlyingObject {
     public void vanish() {
         isValid = false;
     }
+
+    /**
+     * 观察者变化
+     */
+    public void bombActive() {System.out.println("不是观察者");}
 }
 

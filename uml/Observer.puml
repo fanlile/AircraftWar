@@ -1,0 +1,38 @@
+@startuml
+class Game{
+}
+
+class Prop_Bomb {
+    - subscribersList:List<AbstractFlyingObject>
+    + addSubscriber(AbstractFlyingObject subscriber):void
+    + addSubscriber(List<BaseBullet> bullets):void
+    + removeSubscriber(AbstractFlyingObject subscriber):void
+    + active(HeroAircraft heroAircraft,boolean needMusic):void
+}
+Game ..> Prop_Bomb
+
+abstract class AbstractFlyingObject {
+    + active():void
+}
+Prop_Bomb o--> AbstractFlyingObject
+
+class EnemyBullet {
+    + active():void
+}
+AbstractFlyingObject <|-- EnemyBullet
+
+class MobEnemy {
+    + active():void
+}
+AbstractFlyingObject <|-- MobEnemy
+
+class EliteEnemy {
+    + active():void
+}
+AbstractFlyingObject <|-- EliteEnemy
+
+class BossEnemy {
+    + active():void
+}
+AbstractFlyingObject <|-- BossEnemy
+@enduml
